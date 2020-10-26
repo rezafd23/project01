@@ -6,7 +6,7 @@ class MainCard extends Component{
         super(props);
     } render() {
         return <>
-            <div className="card-main" style={{display:this.props.display, height:this.props.height,width:this.props.width}}>
+            <div className="card-main" style={{padding:this.props.padding,display:this.props.display, height:this.props.height,width:this.props.width}}>
                 {this.props.children}
             </div>
         </>

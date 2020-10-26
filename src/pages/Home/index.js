@@ -75,7 +75,7 @@ class Home extends Component {
                     </table>
                 </MainCard>
 
-                <MainCard height="900px" width="800px">
+                <MainCard padding="10px" height="1250px" width="800px">
                     <h2>Data Album</h2>
                     <Form formName="formEdit">
                         <Input classDiv="input-group" classComp="input--style-1" name="name" type="text">
@@ -93,16 +93,22 @@ class Home extends Component {
                         <Input classDiv="input-group" classComp="input--style-1" name="website" type="text">
                             Website
                         </Input>
-                        <Input classDiv="input-group" classComp="input--style-1" name="companyName" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="companyPhrase" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="companyBs" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="addressSt" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="addressSuite" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="addressCity" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="addressZipCode" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="geoLat" type="text"/>
-                        <Input classDiv="input-group" classComp="input--style-1" name="geoLang" type="text"/>
-                        <Input classComp="btn-login" name="btnSearch" type="button" value="Search"/>
+                        <div>
+                            Company
+                            <Input classDiv="input-group" classComp="input--style-1" name="companyName" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="companyPhrase" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="companyBs" type="text"/>
+                        </div>
+                        <div>
+                            Address
+                            <Input classDiv="input-group" classComp="input--style-1" name="addressSt" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="addressSuite" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="addressCity" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="addressZipCode" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="geoLat" type="text"/>
+                            <Input classDiv="input-group" classComp="input--style-1" name="geoLang" type="text"/>
+                        </div>
+                        <Input classComp="btn-login" name="btnSearch" type="button" value="Save"/>
                     </Form>
                 </MainCard>
 
