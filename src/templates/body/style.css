@@ -1,0 +1,53 @@
+.main{
+    /*margin: 20px;*/
+    padding-top: 50px;
+    padding-bottom: 50px;
+    /*border: 1px solid black;*/
+    display: flex;
+
+    /*flex-direction: column;*/
+    height: 1200px;
+
+    justify-content: center;
+    background-color: #dddddd;
+    background-image: -moz-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+    background-image: -webkit-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+    background-image: -ms-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+    background-image: linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+}
+.card-main{
+    border: 1px solid white;
+    border-radius: 30px;
+    /*display: flex;*/
+    width: 400px;
+    height: 450px;
+    background-color: white;
+    justify-content: center;
+}
+.card-about{
+    border: 1px solid white;
+    border-radius: 30px;
+    width: 600px;
+    height: 450px;
+    background-color: white;
+}
+.btn-register{
+    background-color:#8cc9f0;
+    margin-top:20px;
+    padding:10px;
+    border-radius:20px;
+    cursor:pointer;
+}
+.btn-login{
+    background-color:#efa8b0;
+    margin-top:20px;
+    padding:10px;
+    border-radius:20px;
+    cursor:pointer;
+}
+.btn-register:hover{
+    background-color:#a89cc8;
+}
+.btn-login:hover{
+    background-color:#a89cc8;
+}
