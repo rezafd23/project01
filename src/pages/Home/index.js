@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import {Form, Input, MainCard} from "../../components";
 import { Redirect } from "react-router-dom"
+import {connect} from "react-redux"
 
 class Home extends Component {
     constructor(props) {
@@ -186,16 +187,18 @@ class Home extends Component {
 
     render() {
         const {dataUser,loginStatus,role} = this.props
+        console.info("dataUser",dataUser)
+        console.info("dataUser",role)
         let temp=[]
-
         temp=dataUser
         let disDelete="block"
-        temp.forEach((val,index)=>{
-            if (val.name==="Admin"){
-                temp.splice(index,1)
-            }
-        })
+
         if (role==="Admin"){
+            temp.forEach((val,index)=>{
+                if (val.name==="Admin"){
+                    temp.splice(index,1)
+                }
+            })
             console.log("Sini")
 
             // temp=dataUser
@@ -307,5 +310,10 @@ class Home extends Component {
 
     }
 }
+const mapStateToProps=(state)=>({
+    idUser: state.auth.idUser,
+    role: state.auth.role,
+    dataUser:state.process.dataUser
+})
 
-export default Home
+export default connect(mapStateToProps) (Home)

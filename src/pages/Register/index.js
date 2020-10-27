@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Input, MainCard} from "../../components";
+import {connect} from "react-redux"
 
 class Register extends Component {
     constructor(props) {
@@ -22,33 +23,26 @@ class Register extends Component {
     doRegister=()=>{
         const {email,nama,password}=this.state
         const {dataUser}=this.props
-        console.log("cek dataUser")
-        console.log(dataUser)
         const idUser=dataUser.length;
-        console.log("isiEmail")
         if (email&&nama&&password){
-            console.log("true")
-            console.log(dataUser)
-
             let statusUser=false
-            statusUser=dataUser.find(val=>{
-                if (val.email===email){
-                    return true
-                }
-            })
+            statusUser=dataUser.some(val=>(val.email===email))
+
             if (statusUser){
                 alert("email telah digunakan")
                 console.log("email telah digunakan")
             } else {
                 let dataRegister={
+                    id:idUser,
                     name:nama,
-                    username:email,
+                    username:nama,
                     email:email,
                     password:password
                 }
-                this.props.saveData(dataRegister,idUser)
+                let temp = dataUser
+                temp.push(dataRegister)
+                this.props.addData(temp)
                 this.props.history.push('/Login')
-                // this.props.history.push('/Login')
                 console.log("register")
             }
         } else {
@@ -84,5 +78,15 @@ class Register extends Component {
         </div>
     }
 }
+const mapStateToProps=(state)=>({
+    dataUser:state.process.dataUser
+})
 
-export default Register
+const mapDispatchToProps=(dispatch)=>({
+    addData:(user)=>dispatch({
+        type:"registerData",
+        payload: {dataUser:user}}
+    )
+})
+
+export default connect(mapStateToProps,mapDispatchToProps) (Register)

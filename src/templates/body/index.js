@@ -19,45 +19,45 @@ class Body extends Component {
         }
     }
 
-     async componentDidMount() {
-        let temp=[]
-        let temp2=this.state.dataUser
-
-        await fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            // .then(json => temp=json)
-            .then(json => {
-                for (let i=0;i<json.length;i++){
-                    json[i].password="12345"
-                    json[i].role="Used"
-                }
-                temp=json
-                temp.push(this.state.dataUser[0])
-                this.setState({
-                    dataUser:temp
-                })
-            })
-
-         // foreach tidak nunggu
-         // jika for itu menunggu
-         // for (let i=0;i<temp.length;i++){
-         //     temp[i].password="12345"
-         //     temp[i].role="Used"
-         // }
-         // temp.forEach((element)=>{
-         //     element.password="12345"
-         //     element.role="Used"
-         // })
-         // temp.push(this.state.dataUser[0])
-         console.log("cek temp body")
-         console.info(temp2)
-         console.log(temp)
-
-
-         console.log("cek data body")
-         console.log(this.state.dataUser)
-
-    }
+    //  async componentDidMount() {
+    //     let temp=[]
+    //     let temp2=this.state.dataUser
+    //
+    //     await fetch('https://jsonplaceholder.typicode.com/users')
+    //         .then(response => response.json())
+    //         // .then(json => temp=json)
+    //         .then(json => {
+    //             for (let i=0;i<json.length;i++){
+    //                 json[i].password="12345"
+    //                 json[i].role="Used"
+    //             }
+    //             temp=json
+    //             temp.push(this.state.dataUser[0])
+    //             this.setState({
+    //                 dataUser:temp
+    //             })
+    //         })
+    //
+    //      // foreach tidak nunggu
+    //      // jika for itu menunggu
+    //      // for (let i=0;i<temp.length;i++){
+    //      //     temp[i].password="12345"
+    //      //     temp[i].role="Used"
+    //      // }
+    //      // temp.forEach((element)=>{
+    //      //     element.password="12345"
+    //      //     element.role="Used"
+    //      // })
+    //      // temp.push(this.state.dataUser[0])
+    //      console.log("cek temp body")
+    //      console.info(temp2)
+    //      console.log(temp)
+    //
+    //
+    //      console.log("cek data body")
+    //      console.log(this.state.dataUser)
+    //
+    // }
 
     showPage = () => {
         const {page,status} = this.props

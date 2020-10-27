@@ -3,6 +3,7 @@ import {Menu} from "../../components"
 import "./style.css"
 import logo from "../../btpn.png"
 import {Link} from "react-router-dom";
+import {connect} from "react-redux"
 
 class Nav extends Component{
     constructor(props) {
@@ -32,16 +33,10 @@ class Nav extends Component{
                 <Link to={"/About"}>
                     <Menu goPage={()=>this.props.toPage("about")}>About</Menu>
                 </Link>
-                {/*<Link to={"/Login"}>*/}
-                {/*    <Menu displayStyle={display2} goPage={()=>this.props.toPage("login")}>Login</Menu>*/}
-                {/*</Link>*/}
-                {/*<Link to={"/Register"}>*/}
-                {/*    <Menu displayStyle={display2} goPage={()=>this.props.toPage("register")}>Register</Menu>*/}
-                {/*</Link>*/}
                 { this.props.loginStatus ?
                     <Link to={"/Logout"}>
                         {/*{this.props.status(false)}*/}
-                        <Menu displayStyle={display1} goPage={()=>this.props.toPage("logout")}>Logout</Menu>
+                        <Menu displayStyle={display1} goPage={this.props.doLogout}>Logout</Menu>
                     </Link>
                     :
                     <>
@@ -72,19 +67,15 @@ class Nav extends Component{
         return <>
             <div>
                 {this.setdisplay()}
-                {/*<div className="navbar">*/}
-                {/*    <div className="left-nav">*/}
-                {/*        <img src={logo} alt="logo" style={{height:'40px'}} />*/}
-                {/*    </div>*/}
-                {/*    <Menu goPage={()=>this.props.toPage("home")}>Home</Menu>*/}
-                {/*    <Menu goPage={()=>this.props.toPage("about")}>About</Menu>*/}
-                {/*    <Menu goPage={()=>this.props.toPage("login")}>Login</Menu>*/}
-                {/*    <Menu goPage={()=>this.props.toPage("register")}>Register</Menu>*/}
-                {/*    <Menu displayStyle={loginStatus} goPage={()=>this.props.toPage("login")}>Logout</Menu>*/}
-
-                {/*</div>*/}
         </div>
         </>
     }
 }
-export default Nav
+const mapStateToProps = (state) => ({
+    loginStatus: state.auth.isLoggedIn
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    doLogout: () => dispatch({ type: "LOGOUT" })
+})
+export default connect(mapStateToProps,mapDispatchToProps) (Nav)
