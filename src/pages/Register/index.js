@@ -41,7 +41,8 @@ class Register extends Component {
                 console.log("email telah digunakan")
             } else {
                 let dataRegister={
-                    nama:nama,
+                    name:nama,
+                    username:email,
                     email:email,
                     password:password
                 }

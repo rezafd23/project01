@@ -10,7 +10,7 @@ class Input extends Component{
         //     <input className="input--style-1" name={this.props.name} placeholder={this.props.placeholder}
         return <div className={this.props.classDiv}>
             {this.props.children}
-            <input className={this.props.classComp} name={this.props.name} placeholder={this.props.placeholder}
+            <input style={{display:this.props.display}} readOnly={this.props.readOnly} className={this.props.classComp} name={this.props.name} placeholder={this.props.placeholder}
                    type={this.props.type} value={this.props.value} onClick={this.props.funcName}
                    onChange={this.props.onChangeInput}
             ></input>

@@ -27,7 +27,7 @@ class App extends Component{
     return(
         <>
           <Header/>
-          <Nav loginStatus={this.state.loginStatus} toPage={this.onClickButton}/>
+          <Nav loginStatus={this.state.loginStatus} status={this.setLoginStatus} toPage={this.onClickButton}/>
           <Body loginStatus={this.state.loginStatus} status={this.setLoginStatus} page={this.state.page} toPage={this.onClickButton}/>
           <Footer/>
         </>

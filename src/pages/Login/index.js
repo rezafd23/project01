@@ -72,6 +72,8 @@ class Login extends Component {
     doLogin=()=>{
         const {email,password}=this.state
         const {dataUser}=this.props
+        console.log("cek login")
+        console.log(dataUser)
         // console.log("cek dataUser")
         // console.log(dataUser)
         // const idUser=dataUser.length;
@@ -79,7 +81,29 @@ class Login extends Component {
         // console.log(email)
         if (email&&password){
             let statusLogin=false
-            statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
+            // statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
+            statusLogin=dataUser.map(data=> {
+               if ( data.email == email && data.password == password){
+                   // if (data.role!="Admin")
+                   this.props.setRole(data.role)
+                   return true
+               }
+            })
+
+            // if (email.includes("admin")){
+            //     statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
+            //     this.props.setRole("Admin")
+            //     // this.props.updateData("Admin")
+            // } else {
+            //     // statusLogin=dataUser[1].find((data,index)=>(data.username==email&&password=="12345"))
+            //     statusLogin=users.map((data,index)=>{
+            //         if ((data.username==email&&password=="12345")){
+            //             this.props.setRole(index)
+            //             return true
+            //         }
+            //     })
+            //
+            // }
             if (statusLogin){
                 this.props.history.push("/")
                 this.props.loginStatus(statusLogin)

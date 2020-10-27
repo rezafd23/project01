@@ -32,13 +32,30 @@ class Nav extends Component{
                 <Link to={"/About"}>
                     <Menu goPage={()=>this.props.toPage("about")}>About</Menu>
                 </Link>
-                <Link to={"/Login"}>
-                    <Menu displayStyle={display2} goPage={()=>this.props.toPage("login")}>Login</Menu>
-                </Link>
-                <Link to={"/Register"}>
-                    <Menu displayStyle={display2} goPage={()=>this.props.toPage("register")}>Register</Menu>
-                </Link>
-                <Menu displayStyle={display1} goPage={()=>this.props.toPage("logout")}>Logout</Menu>                <Menu displayStyle={display1} goPage={()=>this.props.toPage("home")}>Home</Menu>
+                {/*<Link to={"/Login"}>*/}
+                {/*    <Menu displayStyle={display2} goPage={()=>this.props.toPage("login")}>Login</Menu>*/}
+                {/*</Link>*/}
+                {/*<Link to={"/Register"}>*/}
+                {/*    <Menu displayStyle={display2} goPage={()=>this.props.toPage("register")}>Register</Menu>*/}
+                {/*</Link>*/}
+                { this.props.loginStatus ?
+                    <Link to={"/Logout"}>
+                        {/*{this.props.status(false)}*/}
+                        <Menu displayStyle={display1} goPage={()=>this.props.toPage("logout")}>Logout</Menu>
+                    </Link>
+                    :
+                    <>
+                        <Link to={"/Login"}>
+                            <Menu displayStyle={display2} goPage={()=>this.props.toPage("login")}>Login</Menu>
+                        </Link>
+                        <Link to={"/Register"}>
+                            <Menu displayStyle={display2} goPage={()=>this.props.toPage("register")}>Register</Menu>
+                        </Link>
+                    </>
+                }
+                {/*<Link to={"/Logout"}>*/}
+                {/*    <Menu displayStyle={display1} goPage={()=>this.props.toPage("logout")}>Logout</Menu>*/}
+                {/*</Link>*/}
                 {/*without Link*/}
                 {/*<Menu goPage={()=>this.props.toPage("about")}>About</Menu>*/}
                 {/*<Menu displayStyle={display2} goPage={()=>this.props.toPage("login")}>Login</Menu>*/}
