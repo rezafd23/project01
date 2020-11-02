@@ -19,7 +19,7 @@ class Body extends Component {
         }
     }
 
-    //  async componentDidMount() {
+     // async componentDidMount() {
     //     let temp=[]
     //     let temp2=this.state.dataUser
     //

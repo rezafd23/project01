@@ -235,23 +235,21 @@ class Home extends Component {
                         <tr>
                             <th>No</th>
                             <th className="namealbum" id="namealbum">Nama</th>
-                            <th>Username</th>
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {temp.map((val,index)=>{
+                        {dataUser.map((val,index)=>{
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{val.name}</td>
-                                    <td>{val.username}</td>
                                     <td>{val.email}</td>
                                     <td align="center">
-                                        <button onClick={(e)=>{this.showModal(e,index)}}>Detail</button>
-                                        <button onClick={(e)=>{this.showModalEdit(e,index)}}>Edit</button>
-                                        <button style={{display:disDelete}} onClick={(e)=>{this.deleteData(e,index)}}>Delete</button>
+                                        <button onClick={this.showModal}>Detail</button>
+                                        <button onClick={this.showModalEdit}>Edit</button>
+                                        <button onClick={this.deleteData}>Delete</button>
                                     </td>
                                 </tr>
                             )
@@ -263,6 +261,19 @@ class Home extends Component {
                         {/*    <td>La Vie en Rose</td>*/}
                         {/*</tr>*/}
                     </table>
+
+                    {/*<table className="tableData" width="100%" border="1">*/}
+                    {/*    <thead>*/}
+                    {/*    <tr>*/}
+                    {/*        <td></td>*/}
+                    {/*    </tr>*/}
+                    {/*    </thead>*/}
+                    {/*    /!*<tr>*!/*/}
+                    {/*    /!*    <td>1</td>*!/*/}
+                    {/*    /!*    <td>Tonny Bennet</td>*!/*/}
+                    {/*    /!*    <td>La Vie en Rose</td>*!/*/}
+                    {/*    /!*</tr>*!/*/}
+                    {/*</table>*/}
                 </MainCard>
 
                 <MainCard display={this.state.display} padding="20px" height="1250px" width="800px">

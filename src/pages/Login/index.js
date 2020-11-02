@@ -31,13 +31,13 @@ class Login extends Component {
         let userLogin=[]
         if (email&&password){
             let statusLogin=false
-            console.log("BERHASIL LOGIN")
+            // console.log("BERHASIL LOGIN")
             console.log(dataUser)
-            statusLogin=dataUser.some((data)=>(data.username==email&&data.password==password))
-            console.log(statusLogin)
+            // statusLogin=dataUser.some((data)=>(data.username==email&&data.password==password))
+            // console.log(statusLogin)
             // statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
             dataUser.find(data=> {
-               if ( data.username == email && data.password == password){
+               if ( data.email === email && data.password === password){
                    console.log("BERHASIL LOGIN")
                    // if (data.role!="Admin")
                    // this.props.setRole(data.role)
@@ -46,6 +46,7 @@ class Login extends Component {
                        idUser:data.id,
                        role:data.role
                    }
+                   console.log("cekUser"+user)
                    userLogin.splice(0,0,user)
                    // console.log("cek user get"+data.username)
                    // console.log(data.username)
