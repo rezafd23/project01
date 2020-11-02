@@ -55,15 +55,17 @@ class Home extends Component {
 
 
     showModal=(event,index)=>{
-        const {users,role}=this.props
+        const {dataUser,role,idUser}=this.props
         let temp=[]
         if (role=="Admin"){
-            temp=users
+            temp=dataUser
         } else{
-            temp.push(users[role])
+            temp.splice(0,0,dataUser[idUser])
             // console.log("cek temp")
             // console.log(temp)
         }
+        console.log("isi index")
+        console.log(temp)
         if (this.state.display=="block"){
             this.setState({
                 display:"none"
@@ -92,8 +94,50 @@ class Home extends Component {
 
     }
 
+    showModalEdit=(event,index)=>{
+        const {dataUser,role,idUser}=this.props
+        let temp=[]
+        if (role=="Admin"){
+            temp=dataUser
+        } else{
+            temp.splice(0,0,dataUser[idUser])
+            // console.log("cek temp")
+            // console.log(temp)
+        }
+        console.log("isi index")
+        console.log(temp)
+        if (this.state.display=="block"){
+            this.setState({
+                display:"none"
+            })
+        } else {
+            this.setState({
+                display:"block",
+                displayButton:"block",
+                id:temp[index].id,
+                name:temp[index].name,
+                email:temp[index].email,
+                username:temp[index].username,
+                phone:temp[index].phone,
+                website:temp[index].website,
+                compName:temp[index].company.name,
+                catchPhrase:temp[index].company.catchPhrase,
+                bs:temp[index].company.bs,
+                street:temp[index].address.street,
+                suite:temp[index].address.suite,
+                city:temp[index].address.city,
+                zipcode:temp[index].address.zipcode,
+                lat:temp[index].address.geo.lat,
+                lng:temp[index].address.geo.lng,
+                readOnly:false,
+                title:"Edit Data Users"
+            })
+        }
+
+    }
+
     deleteData=(event,index)=>{
-        let temp=this.props.users
+        let temp=this.props.dataUser
         temp.splice(index,1)
         this.props.editUser(temp)
         console.log("delete")
@@ -105,7 +149,7 @@ class Home extends Component {
     }
 
     saveEdit=()=>{
-        let data=this.props.users
+        let data=this.props.dataUser
         let temp={
             id:this.state.id,
             name:this.state.name,
@@ -142,42 +186,46 @@ class Home extends Component {
         console.log(this.state.users)
     }
 
-    showModalEdit=(event,index)=>{
-        const {users,role}=this.props
-        let temp=[]
-        if (role=="Admin"){
-            temp=users
-        } else{
-            temp.push(users[role])
-        }
-        if (this.state.display=="block"){
-            this.setState({
-                display:"none"
-            })
-        } else {
-            this.setState({
-                display:"block",
-                displayButton:"block",
-                id:temp[index].id,
-                name:temp[index].name,
-                email:temp[index].email,
-                username:temp[index].username,
-                phone:temp[index].phone,
-                website:temp[index].website,
-                compName:temp[index].company.name,
-                catchPhrase:temp[index].company.catchPhrase,
-                bs:temp[index].company.bs,
-                street:temp[index].address.street,
-                suite:temp[index].address.suite,
-                city:temp[index].address.city,
-                zipcode:temp[index].address.zipcode,
-                lat:temp[index].address.geo.lat,
-                lng:temp[index].address.geo.lng,
-                readOnly:false,
-                title:"Edit Data Users"
-            })
-        }
-    }
+    // showModalEdit=(event,index,idUser)=>{
+    //     const {dataUser,role}=this.props
+    //     let temp=[]
+    //     if (role=="Admin"){
+    //         temp=dataUser
+    //     } else{
+    //         temp.splice(0,0,dataUser[idUser])
+    //         // temp.push(dataUser[role])
+    //     }
+    //     console.log("cek temp")
+    //     console.log(idUser)
+    //     if (this.state.display=="block"){
+    //         this.setState({
+    //             display:"none"
+    //         })
+    //     }
+    //     else {
+    //         this.setState({
+    //             display:"block",
+    //             displayButton:"block",
+    //             id:temp[index].id,
+    //             name:temp[index].name,
+    //             email:temp[index].email,
+    //             username:temp[index].username,
+    //             phone:temp[index].phone,
+    //             website:temp[index].website,
+    //             compName:temp[index].company.name,
+    //             catchPhrase:temp[index].company.catchPhrase,
+    //             bs:temp[index].company.bs,
+    //             street:temp[index].address.street,
+    //             suite:temp[index].address.suite,
+    //             city:temp[index].address.city,
+    //             zipcode:temp[index].address.zipcode,
+    //             lat:temp[index].address.geo.lat,
+    //             lng:temp[index].address.geo.lng,
+    //             readOnly:false,
+    //             title:"Edit Data Users"
+    //         })
+    //     }
+    // }
     onChangeInput = e => {
         console.log(e.target)
         this.setState({
@@ -186,14 +234,15 @@ class Home extends Component {
     }
 
     render() {
-        const {dataUser,loginStatus,role} = this.props
+        const {dataUser,loginStatus,role,idUser} = this.props
         console.info("dataUser",dataUser)
         console.info("dataUser",role)
-        let temp=[]
-        temp=dataUser
+        var temp=[]
+        // temp=dataUser
         let disDelete="block"
 
         if (role==="Admin"){
+            temp=dataUser
             temp.forEach((val,index)=>{
                 if (val.name==="Admin"){
                     temp.splice(index,1)
@@ -203,20 +252,22 @@ class Home extends Component {
 
             // temp=dataUser
         } else {
-            // temp.push(users[role])
-            // disDelete="none"
+            temp.push(dataUser[idUser])
+            // temp.push(dataUser[role])
+            disDelete="none"
             // this.setState({
             //     disDelete:"none"
             // })
-            // temp=users[role]
-            // temp = dataUser[1].filter(obj => {
+            // temp=dataUser[role]
+            // temp = dataUser[role].find(obj => {
             //     return obj.id === role+1
             // })
-            // console.log(temp)
-            // // temp=dataUser[1]
+            console.log("cek home")
+            console.log(temp)
+            // temp=dataUser[1]
         }
         // {this.fetchData()}
-        console.log("cek home")
+        // console.log("cek home")
         console.log(role)
         console.log(temp)
         // console.log(users[role])
@@ -240,16 +291,16 @@ class Home extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {dataUser.map((val,index)=>{
+                        {temp.map((val,index)=>{
                             return (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{val.name}</td>
                                     <td>{val.email}</td>
                                     <td align="center">
-                                        <button onClick={this.showModal}>Detail</button>
-                                        <button onClick={this.showModalEdit}>Edit</button>
-                                        <button onClick={this.deleteData}>Delete</button>
+                                        <button onClick={(e)=>{this.showModal(e,index)}}>Detail</button>
+                                        <button onClick={(e)=>{this.showModalEdit(e,index)}}>Edit</button>
+                                        <button style={{display:disDelete}} onClick={(e)=>{this.deleteData(e,index)}}>Delete</button>
                                     </td>
                                 </tr>
                             )
