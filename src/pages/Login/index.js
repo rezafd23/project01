@@ -18,54 +18,97 @@ class Login extends Component {
         })
     }
 
-    doLogin=()=>{
+    doLogin=async ()=>{
+        let data=[]
         const {email,password}=this.state
-        const {dataUser}=this.props
-        console.log("cek login")
-        console.log(dataUser)
-        // console.log("cek dataUser")
-        // console.log(dataUser)
-        // const idUser=dataUser.length;
-        // console.log("isiEmail")
-        // console.log(email)
-        let userLogin=[]
-        if (email&&password){
-            let statusLogin=false
-            // console.log("BERHASIL LOGIN")
-            console.log(dataUser)
-            // statusLogin=dataUser.some((data)=>(data.username==email&&data.password==password))
-            // console.log(statusLogin)
-            // statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
-            dataUser.find(data=> {
-               if ( data.email === email && data.password === password){
-                   console.log("BERHASIL LOGIN")
-                   // if (data.role!="Admin")
-                   // this.props.setRole(data.role)
-                   let user={
-                       username:data.username,
-                       idUser:data.id,
-                       role:data.role
-                   }
-                   console.log("cekUser"+user)
-                   userLogin.splice(0,0,user)
-                   // console.log("cek user get"+data.username)
-                   // console.log(data.username)
-                   statusLogin=true
-               }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email,
+                password: password
             })
-            console.log("cek user get")
-            console.log(userLogin)
-            if (statusLogin){
-                this.props.history.push("/")
-                this.props.doLogin(userLogin)
-                this.props.loginStatus(statusLogin)
-            } else {
-                alert("Login Failed!!!!")
-                // console.log("Failed Login")
-            }
-        } else {
-            alert("Mohon Cek Form")
-        }
+        };
+        await fetch('http://localhost:3000/app/api/user/login', requestOptions)
+            .then(response => {
+                // data.push(response.json())
+                console.log("Hasil")
+                console.log(response.json().then(res=>{
+                    console.log("hasil2")
+
+                    if (res.response.isLogined==="true"){
+                        data=res.response.payload
+                    }
+                    console.log(data)
+                }))
+            });
+
+        // console.log("isidata")
+        // console.log(data)
+        // await fetch('https://localhost:3000/app/api/user/login',{
+        //     method: 'POST',
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         email: email,
+        //         password: password
+        //     })
+        // })
+        //     .then(response => response.json())
+        //     .then(json => {
+        //         console.log("dataUser")
+        //         console.log(json)
+        //     })
+
+        //
+        // const {dataUser}=this.props
+        // console.log("cek login")
+        // console.log(dataUser)
+        // // console.log("cek dataUser")
+        // // console.log(dataUser)
+        // // const idUser=dataUser.length;
+        // // console.log("isiEmail")
+        // // console.log(email)
+        // let userLogin=[]
+        // if (email&&password){
+        //     let statusLogin=false
+        //     // console.log("BERHASIL LOGIN")
+        //     console.log(dataUser)
+        //     // statusLogin=dataUser.some((data)=>(data.username==email&&data.password==password))
+        //     // console.log(statusLogin)
+        //     // statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
+        //     dataUser.find(data=> {
+        //        if ( data.email === email && data.password === password){
+        //            console.log("BERHASIL LOGIN")
+        //            // if (data.role!="Admin")
+        //            // this.props.setRole(data.role)
+        //            let user={
+        //                username:data.username,
+        //                idUser:data.id,
+        //                role:data.role
+        //            }
+        //            console.log("cekUser"+user)
+        //            userLogin.splice(0,0,user)
+        //            // console.log("cek user get"+data.username)
+        //            // console.log(data.username)
+        //            statusLogin=true
+        //        }
+        //     })
+        //     console.log("cek user get")
+        //     console.log(userLogin)
+        //     if (statusLogin){
+        //         this.props.history.push("/")
+        //         this.props.doLogin(userLogin)
+        //         this.props.loginStatus(statusLogin)
+        //     } else {
+        //         alert("Login Failed!!!!")
+        //         // console.log("Failed Login")
+        //     }
+        // } else {
+        //     alert("Mohon Cek Form")
+        // }
     }
     checkLogout=()=>{
         const {logout}=this.props
