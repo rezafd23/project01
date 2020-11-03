@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./style.css"
 import {Switch,Route,Redirect} from "react-router-dom"
 import {About, Home, Login, Register} from "../../pages";
+import {connect} from "react-redux";
 
 
 class Body extends Component {
@@ -62,30 +63,15 @@ class Body extends Component {
     showPage = () => {
         const {page,status} = this.props
 
-        // switch (page) {
-        //     case "home":
-        //         return <Home dataUser={this.state.dataUser} />
-        //     case "login":
-        //         return <Login dataUser={this.state.dataUser} logout={false} loginStatus={this.doLogin}/>
-        //     case "logout":
-        //         // this.props.status(false)
-        //         return <Login dataUser={this.state.dataUser} logout={this.state.logout} loginStatus={this.doLogout}/>
-        //     case "about":
-        //         return <About/>
-        //     case "register":
-        //         return <Register dataUser={this.state.dataUser} saveData={this.setDataUser}/>
-        //     default:
-        //         break;
-        // }
-        return (
+         return (
 
             <Switch>
                 {/*<Route exact path="/">*/}
                 {/*    <Home dataUser={this.state.dataUser} />*/}
                 {/*</Route>*/}
-                <Route exact path="/" children={(props) => <Home {...props} role={this.state.role} dataUser={this.state.dataUser} editUser={this.updateUser} loginStatus={this.props.loginStatus}/>} />
+                <Route exact path="/" children={(props) => <Home {...props} role={this.state.role} dataUser={this.state.dataUser} editUser={this.updateUser} loginStatus={this.props.statusLogin}/>} />
                 <Route exact path="/About" component={About}/>
-                <Route exact path="/Login" children={(props) => <Login {...props} setRole={this.setUserRole} dataUser={this.state.dataUser} status={this.props.loginStatus} logout={false} loginStatus={this.doLogin}/>} />
+                <Route exact path="/Login" children={(props) => <Login {...props} setRole={this.setUserRole} dataUser={this.state.dataUser} status={this.props.statusLogin} logout={false} loginStatus={this.doLogin}/>} />
                 <Route exact path="/Logout" children={(props) => <Login {...props} setRole={this.setUserRole} dataUser={this.state.dataUser} status={false} logout={false} loginStatus={this.doLogin}/>} />
                 {/*<Route exact path="/Login">*/}
                 {/*    <Login dataUser={this.state.dataUser} logout={false} loginStatus={this.doLogin}/>*/}
@@ -114,6 +100,7 @@ class Body extends Component {
     doLogout = loginStatus => {
         console.log("cek dologin")
         console.log(loginStatus)
+        this.props.history.push("/")
         this.props.toPage("login")
         this.props.status(false)
     }
@@ -169,5 +156,23 @@ class Body extends Component {
         </>
     }
 }
+const mapStateToProps = (state) => ({
+    statusLogin: state.auth.isLoggedIn,
+    usernameLogin: state.auth.username,
+    dataUser: state.process.dataUser
+})
 
-export default Body;
+const mapDispatchToProps = (dispatch) => ({
+    doLogin: (user) => dispatch({
+        type: "LOGIN",
+        payload: {
+            userLoginData: user
+        },
+    }),setDataUser:(data)=>dispatch({
+        type:"fetchData",
+        payload: {dataUser:data}}
+    )
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Body)

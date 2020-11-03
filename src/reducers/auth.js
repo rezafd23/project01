@@ -11,9 +11,11 @@ const authReducer=(state=initialState,action)=>{
         case "LOGIN":
             return{
                 isLoggedIn: true,
-                username: action.payload.username,
-                role:action.payload.role,
-                idUser:action.payload.idUser
+                userLoginData:action.payload.userLoginData,
+                access_token:action.payload.access_token,
+                // username: action.payload.username,
+                // role:action.payload.role,
+                // idUser:action.payload.idUser
             }
         // case "fetchData":
         //     return {

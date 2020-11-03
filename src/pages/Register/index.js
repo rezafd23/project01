@@ -9,6 +9,10 @@ class Register extends Component {
             email: "",
             nama: "",
             password: "",
+            tmptLahir: "",
+            tglLahir: "",
+            noHp: "",
+            street: "",
             dataUser: []
         }
     }
@@ -20,31 +24,57 @@ class Register extends Component {
         })
     }
 
-    doRegister=()=>{
-        const {email,nama,password}=this.state
+    doRegister=async ()=>{
+        const {email,nama,password,noHp,alamat,tempatLahir,tglLahir}=this.state
         const {dataUser}=this.props
         const idUser=dataUser.length;
         if (email&&nama&&password){
-            let statusUser=false
-            statusUser=dataUser.some(val=>(val.email===email))
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: email,
+                    name: nama,
+                    password: password,
+                    noHp: noHp,
+                    tempatLahir: tempatLahir,
+                    // tglLahir: tglLahir,
+                    tglLahir: new Date(tglLahir),
+                    alamat: alamat,
 
-            if (statusUser){
-                alert("email telah digunakan")
-                console.log("email telah digunakan")
-            } else {
-                let dataRegister={
-                    id:idUser,
-                    name:nama,
-                    username:nama,
-                    email:email,
-                    password:password
-                }
-                let temp = dataUser
-                temp.push(dataRegister)
-                this.props.addData(temp)
-                this.props.history.push('/Login')
-                console.log("register")
-            }
+                })
+            };
+            await fetch('http://localhost:3000/app/api/user/register', requestOptions)
+                .then(response => {
+                    // console.log(response.json().then(res => {
+                    response.json().then(res => {
+                        console.log("hasil reg")
+                        if (res.status === "200") {
+                            this.props.history.push('/Login')
+                        }
+                        console.log(res)
+                    })
+                });
+            // let statusUser=false
+            // statusUser=dataUser.some(val=>(val.email===email))
+            //
+            // if (statusUser){
+            //     alert("email telah digunakan")
+            //     console.log("email telah digunakan")
+            // } else {
+            //     let dataRegister={
+            //         id:idUser,
+            //         name:nama,
+            //         username:nama,
+            //         email:email,
+            //         password:password
+            //     }
+            //     let temp = dataUser
+            //     temp.push(dataRegister)
+            //     this.props.addData(temp)
+            //     this.props.history.push('/Login')
+            //     console.log("register")
+            // }
         } else {
             alert("Mohon Cek Form")
             console.log("false")
@@ -58,7 +88,7 @@ class Register extends Component {
 
     render() {
         return <div>
-            <MainCard display="flex" height="500px" width="450px">
+            <MainCard display="flex" height="680px" width="450px">
                 <form name="formRegister">
                     <h2>Form Registrasi</h2>
                     <Input classDiv="input-group" value={this.state.email} classComp="input--style-1"
@@ -66,6 +96,18 @@ class Register extends Component {
                            onChangeInput={this.onChangeInput}/>
                     <Input classDiv="input-group" value={this.state.nama} classComp="input--style-1" placeholder="Nama"
                            name="nama" type="text"
+                           onChangeInput={this.onChangeInput}/>
+                    <Input classDiv="input-group" value={this.state.noHp} classComp="input--style-1" placeholder="No HP"
+                           name="noHp" type="tel"
+                           onChangeInput={this.onChangeInput}/>
+                           <Input classDiv="input-group" value={this.state.tmptLahir} classComp="input--style-1" placeholder="Tempat Lahir"
+                           name="tmptLahir" type="text"
+                           onChangeInput={this.onChangeInput}/>
+                    <Input classDiv="input-group" value={this.state.tglLahir} classComp="input--style-1" placeholder="Tanggal Lahir"
+                           name="tglLahir" type="date"
+                           onChangeInput={this.onChangeInput}/>
+                    <Input classDiv="input-group" value={this.state.street} classComp="input--style-1" placeholder="Alamat"
+                           name="street" type="text"
                            onChangeInput={this.onChangeInput}/>
                     <Input classDiv="input-group" value={this.state.password} classComp="input--style-1"
                            placeholder="Password" name="password" type="password"

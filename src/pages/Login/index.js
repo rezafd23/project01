@@ -18,12 +18,12 @@ class Login extends Component {
         })
     }
 
-    doLogin=async ()=>{
-        let data=[]
-        const {email,password}=this.state
+    doLogin = async () => {
+        let data = []
+        const {email, password} = this.state
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 email: email,
                 password: password
@@ -31,36 +31,27 @@ class Login extends Component {
         };
         await fetch('http://localhost:3000/app/api/user/login', requestOptions)
             .then(response => {
-                // data.push(response.json())
                 console.log("Hasil")
-                console.log(response.json().then(res=>{
+                // console.log(response.json().then(res => {
+                response.json().then(res => {
                     console.log("hasil2")
 
-                    if (res.response.isLogined==="true"){
-                        data=res.response.payload
-                    }
-                    console.log(data)
-                }))
-            });
+                    if (res.response.isLogined === "true") {
+                        console.log("SUCCESS LOGIN")
+                        data = res.response.payload
+                        if (data.role==="admin"){
+                            this.getDataUser(res.response.access_token)
+                            // {this.getDataUser}
+                        }
+                        this.props.doLogin(data,res.response.access_token)
+                        this.props.history.push("/")
 
-        // console.log("isidata")
-        // console.log(data)
-        // await fetch('https://localhost:3000/app/api/user/login',{
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         email: email,
-        //         password: password
-        //     })
-        // })
-        //     .then(response => response.json())
-        //     .then(json => {
-        //         console.log("dataUser")
-        //         console.log(json)
-        //     })
+                        // this.props.loginStatus(true)
+                    }
+                    console.log("Hasil 3")
+                    console.log(this.props.statusLogin)
+                })
+            });
 
         //
         // const {dataUser}=this.props
@@ -110,14 +101,30 @@ class Login extends Component {
         //     alert("Mohon Cek Form")
         // }
     }
-    checkLogout=()=>{
-        const {logout}=this.props
-        if (logout){
+
+    getDataUser=async (token)=>{
+        let dataUser=[]
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token},
+        };
+        await fetch('http://localhost:3000/app/api/user/users/all',requestOptions)
+            .then(response => response.json())
+            .then(json => dataUser=json)
+        console.log("Get Data User")
+        console.log(dataUser.response.payload)
+        this.props.setDataUser(dataUser.response.payload)
+    }
+
+    checkLogout = () => {
+        const {logout} = this.props
+        if (logout) {
             this.props.loginStatus(logout)
         }
         console.log("Cek123")
     }
-    gotoRegis=()=>{
+    gotoRegis = () => {
         console.log(this)
         this.props.history.push('/Register')
         // this.props.history.push('/Register')
@@ -137,28 +144,32 @@ class Login extends Component {
                            onChangeInput={this.onChangeInput}/>
                     <Input classComp="btn-register" name="btnRegister" funcName={this.gotoRegis} type="button"
                            value="Register"/>
-                    <Input classComp="btn-login" name="btnLogin" funcName={this.doLogin}  type="button" value="Login"/>
+                    <Input classComp="btn-login" name="btnLogin" funcName={this.doLogin} type="button" value="Login"/>
                 </form>
             </MainCard>
         </div>
     }
 }
 
-const mapStateToProps=(state)=>({
+const mapStateToProps = (state) => ({
     statusLogin: state.auth.isLoggedIn,
     usernameLogin: state.auth.username,
-    dataUser:state.process.dataUser
+    dataUser: state.process.dataUser
 })
 
-const mapDispatchToProps=(dispatch)=>({
-    doLogin:(user)=>dispatch({
-        type:"LOGIN",
-        payload:{
-            username:user[0].username,
-            role:user[0].role,
-            idUser:user[0].idUser
+const mapDispatchToProps = (dispatch) => ({
+    doLogin: (user,token) => dispatch({
+        type: "LOGIN",
+        payload: {
+            userLoginData: user,
+            access_token:token
         },
-    })
+    }),
+    setDataUser:(data)=>dispatch({
+        type:"fetchData",
+        payload: {dataUser:data}}
+    )
+
 })
 
-export default connect(mapStateToProps,mapDispatchToProps) (Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

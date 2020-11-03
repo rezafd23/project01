@@ -24,33 +24,33 @@ class App extends Component {
         })
     }
 
-    async componentDidMount() {
-        let temp=[]
-        let temp2=this.state.dataUser
-
-        let admin={
-            id:"101",
-            name:"Admin",
-            role:"Admin",
-            password:"12345",
-            email:"admin@admin.com",
-            username:"Admin"
-        }
-
-        await fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(json => {
-                let dataUser=json.map(user=>({
-                    ...user,
-                    password:"12345",
-                    role:"user"
-                }))
-                dataUser.push(admin)
-
-                console.info("dataUser",dataUser)
-                this.props.setDataUser(dataUser)
-            })
-    }
+    // async componentDidMount() {
+    //     let temp=[]
+    //     let temp2=this.state.dataUser
+    //
+    //     let admin={
+    //         id:"101",
+    //         name:"Admin",
+    //         role:"Admin",
+    //         password:"12345",
+    //         email:"admin@admin.com",
+    //         username:"Admin"
+    //     }
+    //
+    //     await fetch('https://jsonplaceholder.typicode.com/users')
+    //         .then(response => response.json())
+    //         .then(json => {
+    //             let dataUser=json.map(user=>({
+    //                 ...user,
+    //                 password:"12345",
+    //                 role:"user"
+    //             }))
+    //             dataUser.push(admin)
+    //
+    //             console.info("dataUser",dataUser)
+    //             // this.props.setDataUser(dataUser)
+    //         })
+    // }
 
     doLogin = () => {
         this.setState({isLoggedIn: true})
