@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 import rootReducer from '../reducers'
@@ -9,7 +9,7 @@ const persistConfig = {
     storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistCombineReducers(persistConfig, rootReducer)
 
 export default () => {
     let store = createStore(persistedReducer)
