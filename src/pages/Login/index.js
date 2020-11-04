@@ -39,81 +39,48 @@ class Login extends Component {
                     if (res.response.isLogined === "true") {
                         console.log("SUCCESS LOGIN")
                         data = res.response.payload
-                        if (data.role==="admin"){
-                            this.getDataUser(res.response.access_token)
+                        // if (data.role==="admin"){
+                        //     console.log("MaSUK ADMIN")
+                            this.getDataUser(res.response.access_token,data.role)
                             // {this.getDataUser}
-                        }
+                        // }
+
                         this.props.doLogin(data,res.response.access_token)
                         this.props.history.push("/")
 
                         // this.props.loginStatus(true)
+                        console.log("Hasil 3")
+                        console.log(this.props.statusLogin)
+                        console.log(this.props.dataUser)
+                    } else {
+                        if (res.response.message==="Email Not Found"||res.response.message==="Wrong Password"){
+                            console.log("Hasil error",res)
+                            alert("Please Check your email and password")
+                        } else {
+                            alert("Please try again")
+                        }
                     }
-                    console.log("Hasil 3")
-                    console.log(this.props.statusLogin)
+
                 })
             });
 
-        //
-        // const {dataUser}=this.props
-        // console.log("cek login")
-        // console.log(dataUser)
-        // // console.log("cek dataUser")
-        // // console.log(dataUser)
-        // // const idUser=dataUser.length;
-        // // console.log("isiEmail")
-        // // console.log(email)
-        // let userLogin=[]
-        // if (email&&password){
-        //     let statusLogin=false
-        //     // console.log("BERHASIL LOGIN")
-        //     console.log(dataUser)
-        //     // statusLogin=dataUser.some((data)=>(data.username==email&&data.password==password))
-        //     // console.log(statusLogin)
-        //     // statusLogin=dataUser.find(data=>(data.email==email&&data.password==password))
-        //     dataUser.find(data=> {
-        //        if ( data.email === email && data.password === password){
-        //            console.log("BERHASIL LOGIN")
-        //            // if (data.role!="Admin")
-        //            // this.props.setRole(data.role)
-        //            let user={
-        //                username:data.username,
-        //                idUser:data.id,
-        //                role:data.role
-        //            }
-        //            console.log("cekUser"+user)
-        //            userLogin.splice(0,0,user)
-        //            // console.log("cek user get"+data.username)
-        //            // console.log(data.username)
-        //            statusLogin=true
-        //        }
-        //     })
-        //     console.log("cek user get")
-        //     console.log(userLogin)
-        //     if (statusLogin){
-        //         this.props.history.push("/")
-        //         this.props.doLogin(userLogin)
-        //         this.props.loginStatus(statusLogin)
-        //     } else {
-        //         alert("Login Failed!!!!")
-        //         // console.log("Failed Login")
-        //     }
-        // } else {
-        //     alert("Mohon Cek Form")
-        // }
     }
 
-    getDataUser=async (token)=>{
+    getDataUser=async (token,role)=>{
+        console.log("CEK 1 GET")
         let dataUser=[]
+        let url=""
+        url=(role==="admin")?'http://localhost:3000/app/api/user/users/all':'http://localhost:3000/app/api/user/users/'
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json',
             'Authorization':'Bearer '+token},
         };
-        await fetch('http://localhost:3000/app/api/user/users/all',requestOptions)
+        await fetch(url,requestOptions)
             .then(response => response.json())
             .then(json => dataUser=json)
         console.log("Get Data User")
-        console.log(dataUser.response.payload)
+        console.log(dataUser)
         this.props.setDataUser(dataUser.response.payload)
     }
 

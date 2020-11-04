@@ -59,12 +59,14 @@ class Home extends Component {
 
 
     showModal = (event, index) => {
-        const {dataUser, userLoginData, idUser} = this.props
+        const {dataUser, userLoginData} = this.props
         let temp = []
         if (userLoginData['role'] === "admin") {
             temp = dataUser
         } else {
-            temp.splice(0, 0, dataUser[idUser])
+            console.log("cek isi data user")
+            console.log(dataUser)
+            temp.splice(0, 0, dataUser[0])
             // console.log("cek temp")
             // console.log(temp)
         }
@@ -102,14 +104,15 @@ class Home extends Component {
     }
 
     showModalEdit = (event, index) => {
-        const {dataUser, userLoginData, idUser} = this.props
+        const {dataUser, userLoginData} = this.props
+
         let temp = []
         if (userLoginData['role'] === "admin") {
             temp = dataUser
         } else {
-            temp.splice(0, 0, dataUser[idUser])
-            // console.log("cek temp")
-            // console.log(temp)
+            console.log("cek isi data user")
+            console.log(dataUser)
+            temp.splice(0, 0, dataUser[0])
         }
         console.log("isi index")
         console.log(temp)
@@ -189,7 +192,7 @@ class Home extends Component {
 
     deleteData = async (event,index) => {
         console.log("cek delete"+index)
-        const response = await fetch('http://localhost:3000/app/api/user/delete/'+index, {
+        const response = await fetch('http://localhost:3000/app/api/user/remove/'+index, {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -214,13 +217,16 @@ class Home extends Component {
         });
     }
     getDataUser=async ()=>{
+        let role=this.props.role
         let dataUser=[]
+        let url=(role==="admin")?'http://localhost:3000/app/api/user/users/all':'http://localhost:3000/app/api/user/users/'
+
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json',
                 'Authorization':'Bearer '+this.props.access_token},
         };
-        await fetch('http://localhost:3000/app/api/user/users/all',requestOptions)
+        await fetch(url,requestOptions)
             .then(response => response.json())
             .then(json => dataUser=json)
         console.log("Get Data User")
@@ -308,10 +314,14 @@ class Home extends Component {
                                             this.showModalEdit(e, index)
                                         }}>Edit
                                         </button>
-                                        <button style={{display: disDelete}} onClick={(e) => {
+                                        {val.role !== "admin" && <button style={{display: disDelete}} onClick={(e) => {
                                             this.deleteData(e, val._id)
                                         }}>Delete
-                                        </button>
+                                        </button>}
+                                        {/*<button style={{display: disDelete}} onClick={(e) => {*/}
+                                        {/*    this.deleteData(e, val._id)*/}
+                                        {/*}}>Delete*/}
+                                        {/*</button>*/}
                                     </td>
                                 </tr>
                             )

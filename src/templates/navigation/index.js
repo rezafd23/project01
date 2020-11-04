@@ -34,7 +34,7 @@ class Nav extends Component{
                     <Menu goPage={()=>this.props.toPage("about")}>About</Menu>
                 </Link>
                 { this.props.loginStatus ?
-                    <Link to={"/Logout"}>
+                    <Link to={"/"}>
                         {/*{this.props.status(false)}*/}
                         <Menu displayStyle={display1} goPage={this.props.doLogout}>Logout</Menu>
                     </Link>

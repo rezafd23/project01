@@ -49,8 +49,10 @@ class Register extends Component {
                     // console.log(response.json().then(res => {
                     response.json().then(res => {
                         console.log("hasil reg")
-                        if (res.status === "200") {
+                        if (res.status === 200) {
                             this.props.history.push('/Login')
+                        } else {
+                            alert("Register Failed, Please Check your email")
                         }
                         console.log(res)
                     })
